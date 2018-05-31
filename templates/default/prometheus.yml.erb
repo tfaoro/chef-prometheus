@@ -35,7 +35,7 @@ rule_files:
 <% if @alert_managers %>
 alerting:
   alertmanagers:
-  <% @alert_managers.each do |config| %>
-  - <%= config.to_hash.to_yaml(:Indent => 4, :UseHeader => false) %>
+  <% @alert_managers.each do |yaml| %>
+  - <%= yaml %>
   <% end %>
 <% end %>

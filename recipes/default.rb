@@ -50,6 +50,10 @@ include_recipe "prometheus::#{node['prometheus']['install_method']}"
 
 # -- Write our Config -- #
 
+alert_managers_yaml = node['prometheus']['alert_managers'].map do |config|
+  config.to_hash.to_yaml.sub(/^---/, '').gsub("\n", "\n    ")
+end
+
 template node['prometheus']['flags']['config.file'] do
   action    :nothing
   cookbook  node['prometheus']['job_config_cookbook_name']
@@ -58,7 +62,7 @@ template node['prometheus']['flags']['config.file'] do
   owner     node['prometheus']['user']
   group     node['prometheus']['group']
   variables(
-    alert_managers: node['prometheus']['alert_managers'],
+    alert_managers: alert_managers_yaml,
     rule_filenames: node['prometheus']['rule_filenames']
   )
   notifies  :reload, 'service[prometheus]'
