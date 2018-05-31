@@ -51,7 +51,7 @@ include_recipe "prometheus::#{node['prometheus']['install_method']}"
 # -- Write our Config -- #
 
 alert_managers_yaml = node['prometheus']['alert_managers'].map do |config|
-  config.to_hash.to_yaml.sub(/^---/, '').gsub("\n", "\n    ")
+  config.to_hash.to_yaml.sub(/^---\n/, '').gsub("\n", "\n      ")
 end
 
 template node['prometheus']['flags']['config.file'] do
