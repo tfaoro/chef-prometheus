@@ -32,3 +32,10 @@ rule_files:
 <% end %>
 <% end %>
 
+<% if @alert_managers %>
+alerting:
+  alertmanagers:
+  <% @alert_managers.each do |config| %>
+  - <%= config.to_yaml %>
+  <% end %>
+<% end %>

@@ -58,6 +58,7 @@ template node['prometheus']['flags']['config.file'] do
   owner     node['prometheus']['user']
   group     node['prometheus']['group']
   variables(
+    alert_managers: node['prometheus']['alert_managers'],
     rule_filenames: node['prometheus']['rule_filenames']
   )
   notifies  :reload, 'service[prometheus]'
